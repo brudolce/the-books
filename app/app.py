@@ -1,13 +1,14 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request, render_template
 from flask_cors import CORS
-from flask import Flask, jsonify, request
 import uuid
 
 # configuration
 DEBUG = True
 
 # instantiate the app
-app = Flask(__name__)
+app = Flask(__name__,
+            static_folder="./dist/static",
+            template_folder="./dist")
 app.config.from_object(__name__)
 
 # enable CORS
@@ -37,11 +38,11 @@ BOOKS = [
 
 
 # sanity check route
-@app.route('/ping', methods=['GET'])
+@app.route('/api/ping', methods=['GET'])
 def ping_pong():
     return jsonify('pong!')
 
-@app.route('/books', methods=['GET', 'POST'])
+@app.route('/api/books', methods=['GET', 'POST'])
 def all_books():
     response_object = {'status': 'success'}
     if request.method == 'POST':
@@ -57,7 +58,7 @@ def all_books():
         response_object['books'] = BOOKS
     return jsonify(response_object)
 
-@app.route('/books/<book_id>', methods=['PUT', 'DELETE'])
+@app.route('/api/books/<book_id>', methods=['PUT', 'DELETE'])
 def single_book(book_id):
     response_object = {'status': 'success'}
     if request.method == 'PUT':
@@ -81,6 +82,13 @@ def remove_book(book_id):
             BOOKS.remove(book)
             return True
     return False
+
+
+
+@app.route('/', defaults={'path': ''})
+@app.route('/<path:path>')
+def catch_all(path):
+    return render_template("index.html")
 
 
 if __name__ == '__main__':
