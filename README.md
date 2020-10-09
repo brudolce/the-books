@@ -1,11 +1,16 @@
 # the books
 
 
-exercise for vue.js and flask.py
-vue create($ npm install -g @vue/cli@3.7.0) VS vue init webpack($ npm install -g vue-cli)
-<br>
-<p>
-'vue create' has less config options regarding the bundling, but has a state manager included, 'vue init webpack' is an old school webpack, has more options and fetures, better for creating static SPAs. <br></br>
-client folder - 'vue create'
-fontend folder - 'vue init webpack'
-</p>
+exercise for vue.js using a flask server
+
+
+vue create
+```bash
+npm install -g @vue/cli@3.7.0)
+```
+VS
+vue init webpack
+```bash
+npm install -g vue-cli
+```
+
